@@ -1,0 +1,80 @@
+<app-nav></app-nav>
+<div class="container">
+    <form [formGroup]="personForm" (ngSubmit)="personFormSubmit()" novalidate>
+        <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-control" formControlName="name" aria-describedby="emailHelp">
+            <small *ngIf="getPersonForm['name'].invalid && (getPersonForm['name'].dirty || getPersonForm['name'].touched)">
+                Name required
+            </small>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Address</label>
+            <input type="text" class="form-control" formControlName="address" aria-describedby="emailHelp">
+            <small *ngIf="getPersonForm['address'].invalid && (getPersonForm['address'].dirty || getPersonForm['address'].touched)">
+                Address required
+            </small>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Phone Number</label>
+            <input type="text" class="form-control" formControlName="phoneNumber" aria-describedby="emailHelp">
+            <div *ngIf="getPersonForm['phoneNumber'].invalid && (getPersonForm['phoneNumber'].dirty || getPersonForm['phoneNumber'].touched)">
+                <small *ngIf="getPersonForm['phoneNumber'].errors?.['required']">
+                    Phone Number required
+                </small>
+                <small *ngIf="getPersonForm['phoneNumber'].errors?.['pattern']">
+                    Phone Number invalid
+                </small>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" formControlName="email" aria-describedby="emailHelp">
+            <div *ngIf="getPersonForm['email'].invalid && (getPersonForm['email'].dirty || getPersonForm['email'].touched)">
+                <small *ngIf="getPersonForm['email'].errors?.['required']">
+                    Email required
+                </small>
+                <small *ngIf="getPersonForm['email'].errors?.['pattern']">
+                    Email invalid
+                </small>
+            </div>
+        </div>
+        <button class="btn btn-outline-dark mb" type="button" (click)="addItem()">Add Educations</button>
+        <div class="mb-3" formArrayName="educationalQualifications">
+            <div class="row"  *ngFor="let _ of educationalQualifications.controls; let i=index">
+                <ng-container [formGroupName]="i">
+                    <div class="col-2">
+                        <label class="form-label">Name</label>
+                        <input type="email" class="form-control" formControlName="name" aria-describedby="emailHelp">
+                    </div>
+                    <div class="col-2">
+                        <label class="form-label">Institute Name</label>
+                        <input type="email" class="form-control" formControlName="instituteName" aria-describedby="emailHelp">
+                    </div>
+                    <div class="col-2">
+                        <label class="form-label">Grade</label>
+                        <input type="email" class="form-control" formControlName="grade" aria-describedby="emailHelp">
+                    </div>
+                    <div class="col-2">
+                        <label class="form-label">From</label>
+                        <input type="date" class="form-control" formControlName="fromDate" aria-describedby="emailHelp">
+                    </div>
+                    <div class="col-2">
+                        <label class="form-label">To</label>
+                        <input type="date" class="form-control" formControlName="toDate" aria-describedby="emailHelp">
+                    </div>
+                    <div class="col-2 mt-2">
+                        <label class="form-label"></label>
+                        <button type="button" class="form-control btn-danger" (click)="removeItem(i)" >Delete</button>
+                    </div>
+                    <!-- <div class="col-1 mt-2">
+                        <label class="form-label"></label>
+                        <button type="button" class="form-control btn-danger" (click)="removeItem(i)">Delete</button>
+                    </div> -->
+                </ng-container>
+            </div>
+        </div>
+        <button *ngIf="!person" type="submit" class="btn btn-primary" [disabled]="!personForm.valid">Submit</button>
+        <button *ngIf="person" type="submit" class="btn btn-primary" [disabled]="!personForm.valid">Update</button>
+    </form>
+</div>

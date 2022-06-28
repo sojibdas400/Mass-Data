@@ -1,0 +1,77 @@
+<app-nav></app-nav>
+<div class="container">
+    <div *ngIf="persons.length; else elseBlock" class="table-responsive">
+        <table class="table  table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Phone Number</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Qualification</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let person of persons; let i = index">
+                    <th scope="row">{{ i + 1 }}</th>
+                    <td>{{ person.name }}</td>
+                    <td>{{ person.address }}</td>
+                    <td>{{ person.phoneNumber }}</td>
+                    <td>{{ person.email }}</td>
+                    <td>
+                        <div
+                            *ngFor="
+                                let educationalQualification of person.educationalQualifications
+                            "
+                        >
+                            <p *ngIf="educationalQualification.name">
+                                Name: {{ educationalQualification.name }}
+                            </p>
+
+                            <p *ngIf="educationalQualification.instituteName">
+                                Institute:
+                                {{ educationalQualification.instituteName }}
+                            </p>
+
+                            <p *ngIf="educationalQualification.grade">
+                                Grade: {{ educationalQualification.grade }}
+                            </p>
+
+                            <p *ngIf="educationalQualification.fromDate">
+                                From: {{ educationalQualification.fromDate }}
+                            </p>
+
+                            <p *ngIf="educationalQualification.toDate">
+                                To: {{ educationalQualification.toDate }}
+                            </p>
+                            <br />
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex center">
+                            <button
+                                type="button"
+                                (click)="editPerson(person.id)"
+                                class="btn btn-primary"
+                            >
+                                Edit
+                            </button>
+                            <button
+                                type="button"
+                                (click)="deletePerson(i)"
+                                class="btn btn-danger"
+                            >
+                                Delete
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <ng-template #elseBlock>
+        <h2 class="text-center">There is no Users.</h2>
+    </ng-template>
+</div>
